@@ -83,6 +83,21 @@ if (process.env.GOOGLE_CLIENT_ID) {
 // Protected routes (require authentication)
 router.get('/me', protect, authController.getMe);
 
+// Debug endpoint to validate token (development only)
+if (process.env.NODE_ENV === 'development') {
+  router.get('/validate-token', protect, (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'Token is valid',
+      user: {
+        id: req.user._id,
+        email: req.user.email,
+        role: req.user.role
+      }
+    });
+  });
+}
+
 router.post('/logout', protect, authController.logout);
 
 router.put(
