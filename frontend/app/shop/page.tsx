@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import apiClient from '@/lib/api/client';
 import ProductCard from '@/components/products/ProductCard';
@@ -68,10 +69,46 @@ export default function ShopPage() {
       }
 
       const response = await apiClient.get('/products', { params });
-      setProducts(response.data.data);
-      setPagination(response.data.pagination);
+      
+      // Handle response structure
+      if (response.data.success && response.data.data) {
+        setProducts(response.data.data);
+        setPagination(response.data.pagination || {
+          page: 1,
+          limit: 12,
+          total: response.data.data.length,
+          pages: 1,
+        });
+      } else if (Array.isArray(response.data)) {
+        // Handle case where API returns array directly
+        setProducts(response.data);
+        setPagination({
+          page: 1,
+          limit: 12,
+          total: response.data.length,
+          pages: 1,
+        });
+      } else {
+        console.error('Unexpected API response:', response.data);
+        setProducts([]);
+        setPagination({
+          page: 1,
+          limit: 12,
+          total: 0,
+          pages: 0,
+        });
+      }
     } catch (error: any) {
       console.error('Error fetching products:', error);
+      console.error('Error details:', error.response?.data || error.message);
+      // Set empty state on error
+      setProducts([]);
+      setPagination({
+        page: 1,
+        limit: 12,
+        total: 0,
+        pages: 0,
+      });
     } finally {
       setLoading(false);
     }
@@ -134,8 +171,18 @@ export default function ShopPage() {
               </div>
             ) : products.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 text-lg">No products found</p>
-                <p className="text-gray-500 text-sm mt-2">Try adjusting your filters</p>
+                <p className="text-gray-600 text-lg mb-2">No products found</p>
+                <p className="text-gray-500 text-sm mb-4">
+                  {loading ? 'Loading products...' : 'Try adjusting your filters or check back later'}
+                </p>
+                {!loading && (
+                  <Link
+                    href="/shop"
+                    className="inline-block px-6 py-2 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition-colors"
+                  >
+                    View All Products
+                  </Link>
+                )}
               </div>
             ) : (
               <>
@@ -216,4 +263,5 @@ export default function ShopPage() {
     </div>
   );
 }
+
 

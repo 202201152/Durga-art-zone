@@ -2,11 +2,14 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuth();
+  const { getTotalItems } = useCart();
   const router = useRouter();
+  const cartItemsCount = getTotalItems();
 
   const handleAccountClick = () => {
     if (isAuthenticated) {
@@ -77,6 +80,11 @@ export default function Header() {
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-[#d4a574] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemsCount > 9 ? '9+' : cartItemsCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
