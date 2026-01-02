@@ -18,7 +18,7 @@ const router = express.Router();
 
 // Import route modules
 const authRoutes = require('./auth');
-// const productRoutes = require('./products');
+const productRoutes = require('./products');
 // const userRoutes = require('./users');
 // const orderRoutes = require('./orders');
 // const adminRoutes = require('./admin');
@@ -30,6 +30,7 @@ const v1Router = express.Router();
 
 // Mount route modules
 v1Router.use('/auth', authRoutes);
+v1Router.use('/products', productRoutes);
 // v1Router.use('/products', productRoutes);
 // v1Router.use('/users', userRoutes);
 // v1Router.use('/orders', orderRoutes);
