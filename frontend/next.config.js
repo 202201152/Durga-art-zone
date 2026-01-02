@@ -12,8 +12,14 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    domains: ['localhost'], // Add your image CDN domain here
+    domains: ['localhost', 'images.unsplash.com', 'via.placeholder.com'], // Add your image CDN domain here
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 
   // Redirects and rewrites if needed

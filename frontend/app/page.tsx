@@ -1,85 +1,64 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function Home() {
-  const { user, isAuthenticated, logout, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-[#faf8f5] flex items-center justify-center">
-        <div className="text-gray-600">Loading...</div>
-      </main>
-    );
-  }
-
   return (
-    <main className="min-h-screen bg-[#faf8f5]">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900">
-              Durga Art Zone
+    <div className="min-h-screen bg-white flex flex-col">
+      <Header />
+      
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="bg-[#faf8f5] py-20">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+              Everyday Elegance
             </h1>
-            <div className="flex gap-4 items-center">
-              {isAuthenticated ? (
-                <>
-                  <span className="text-gray-700">
-                    Welcome, <strong>{user?.name}</strong>
-                  </span>
-                  <button
-                    onClick={logout}
-                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-gray-800 transition-colors"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/auth/login"
-                    className="px-4 py-2 text-gray-700 hover:text-gray-900"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/auth/signup"
-                    className="px-4 py-2 bg-[#d4a574] hover:bg-[#c49560] text-white rounded-lg transition-colors"
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Premium jewelry crafted with care for the modern woman. Worn with confidence.
+            </p>
+            <Link
+              href="/shop"
+              className="inline-block px-8 py-3 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition-colors"
+            >
+              Shop Now
+            </Link>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
+              Shop by Category
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { name: 'Bracelets', href: '/shop?category=bracelet', image: '💍' },
+                { name: 'Earrings', href: '/shop?category=earrings', image: '✨' },
+                { name: 'Chains', href: '/shop?category=chains', image: '🔗' },
+                { name: 'Rings', href: '/shop?category=rings', image: '💎' },
+              ].map((category) => (
+                <Link
+                  key={category.name}
+                  href={category.href}
+                  className="text-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
+                >
+                  <div className="text-4xl mb-3">{category.image}</div>
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#d4a574] transition-colors">
+                    {category.name}
+                  </h3>
+                </Link>
+              ))}
             </div>
           </div>
+        </section>
+      </main>
 
-          {/* Content */}
-          <div className="text-center">
-            <p className="text-xl text-gray-600 mb-4">
-              Premium Jewelry E-commerce Platform
-            </p>
-            <p className="text-gray-500 mb-8">
-              {isAuthenticated
-                ? 'Authentication is working! Ready to build more features.'
-                : 'Please sign in to continue.'}
-            </p>
-
-            {isAuthenticated && (
-              <div className="mt-8 p-6 bg-white rounded-lg shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">Your Account</h2>
-                <div className="text-left space-y-2">
-                  <p><strong>Email:</strong> {user?.email}</p>
-                  {user?.phone && <p><strong>Phone:</strong> {user.phone}</p>}
-                  <p><strong>Role:</strong> {user?.role}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+      <Footer />
+    </div>
   );
 }
 
