@@ -123,3 +123,4 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
 }
 
 
+

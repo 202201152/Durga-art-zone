@@ -143,3 +143,4 @@ Example product structure:
 - Backend console output
 - Network tab showing API calls
 
+
