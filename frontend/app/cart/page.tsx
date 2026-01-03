@@ -2,47 +2,61 @@
 
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Link from 'next/link';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCart();
+  const {
+    items,
+    updateQuantity,
+    removeFromCart,
+    getTotalPrice,
+    clearCart,
+  } = useCart();
+
   const router = useRouter();
   const total = getTotalPrice();
 
+  // ================= EMPTY CART =================
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-white flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Cart</h1>
-            <p className="text-gray-600 mb-8">Your cart is empty</p>
-            <Link
-              href="/shop"
-              className="inline-block px-6 py-3 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition-colors"
-            >
-              Continue Shopping
-            </Link>
-          </div>
+
+        <main className="flex-1 container mx-auto px-4 py-12 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Your Cart
+          </h1>
+          <p className="text-gray-600 mb-8">Your cart is empty</p>
+
+          <Link
+            href="/shop"
+            className="inline-block px-6 py-3 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition"
+          >
+            Continue Shopping
+          </Link>
         </main>
+
         <Footer />
       </div>
     );
   }
 
+  // ================= CART PAGE =================
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">
+            Shopping Cart
+          </h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Cart Items */}
+            {/* ================= CART ITEMS ================= */}
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
                 <div
@@ -50,14 +64,13 @@ export default function CartPage() {
                   className="flex flex-col sm:flex-row gap-4 p-4 border border-gray-200 rounded-lg"
                 >
                   {/* Product Image */}
-                  <div className="w-full sm:w-32 h-32 relative flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden">
+                  <div className="w-full sm:w-32 h-32 relative bg-gray-100 rounded-lg overflow-hidden">
                     {item.image ? (
                       <Image
                         src={item.image}
                         alt={item.name}
                         fill
                         className="object-cover"
-                        sizes="128px"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -66,41 +79,77 @@ export default function CartPage() {
                     )}
                   </div>
 
-                  {/* Product Details */}
+                  {/* Product Info + Controls */}
                   <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-4">
+                    {/* Product Details */}
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">{item.name}</h3>
+                      <h3 className="font-semibold text-gray-900">
+                        {item.name}
+                      </h3>
+
                       {item.material && (
-                        <p className="text-sm text-gray-600 mb-1">Material: {item.material}</p>
+                        <p className="text-sm text-gray-600">
+                          Material: {item.material}
+                        </p>
                       )}
+
                       {item.size && (
-                        <p className="text-sm text-gray-600">Size: {item.size}</p>
+                        <p className="text-sm text-gray-600">
+                          Size: {item.size}
+                        </p>
                       )}
-                      <p className="text-lg font-bold text-gray-900 mt-2">${item.price}</p>
+
+                      <p className="text-lg font-bold text-gray-900 mt-2">
+                        ${item.price}
+                      </p>
                     </div>
 
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-4">
-                      <div className="flex items-center border border-gray-200 rounded-lg">
-                        <button
-                          onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                          className="px-3 py-1 hover:bg-gray-100 transition-colors"
-                        >
-                          -
-                        </button>
-                        <span className="px-4 py-1 min-w-[3rem] text-center">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                          className="px-3 py-1 hover:bg-gray-100 transition-colors"
-                        >
-                          +
-                        </button>
-                      </div>
+                      <button
+                        onClick={() =>
+                          updateQuantity(item.productId, item.quantity - 1)
+                        }
+                        disabled={item.quantity <= 1}
+                        className="
+                          w-9 h-9 rounded-full
+                          border border-gray-400
+                          flex items-center justify-center
+                          text-gray-800
+                          hover:border-gray-600 hover:text-black
+                          disabled:opacity-40 disabled:cursor-not-allowed
+                          transition
+                        "
+                      >
+                        −
+                      </button>
+
+                      <span className="min-w-[24px] text-center font-medium text-gray-900">
+                        {item.quantity}
+                      </span>
 
                       <button
-                        onClick={() => removeFromCart(item.productId, item.size)}
-                        className="text-red-600 hover:text-red-700 p-2"
+                        onClick={() =>
+                          updateQuantity(item.productId, item.quantity + 1)
+                        }
+                        className="
+                          w-9 h-9 rounded-full
+                          border border-gray-400
+                          flex items-center justify-center
+                          text-gray-800
+                          hover:border-gray-600 hover:text-black
+                          transition
+                        "
+                      >
+                        +
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          removeFromCart(item.productId, item.size)
+                        }
                         aria-label="Remove item"
+                        className="text-gray-500 hover:text-red-600 p-2 transition"
                       >
                         <svg
                           width="20"
@@ -125,34 +174,38 @@ export default function CartPage() {
                 </div>
               ))}
 
-              {/* Clear Cart Button */}
-              <div className="pt-4">
-                <button
-                  onClick={clearCart}
-                  className="text-red-600 hover:text-red-700 text-sm font-medium"
-                >
-                  Clear Cart
-                </button>
-              </div>
+              {/* Clear Cart */}
+              <button
+                onClick={clearCart}
+                className="text-sm text-red-600 hover:text-red-700 font-medium"
+              >
+                Clear Cart
+              </button>
             </div>
 
-            {/* Order Summary */}
-            <div className="lg:col-span-1">
+            {/* ================= ORDER SUMMARY ================= */}
+            <div>
               <div className="bg-gray-50 p-6 rounded-lg sticky top-4">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
-                
+                <h2 className="text-xl font-bold text-gray-900 mb-4">
+                  Order Summary
+                </h2>
+
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between text-gray-600">
                     <span>Subtotal</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
+
                   <div className="flex justify-between text-gray-600">
                     <span>Shipping</span>
                     <span>{total >= 100 ? 'Free' : '$10.00'}</span>
                   </div>
-                  <div className="border-t border-gray-200 pt-3 flex justify-between text-lg font-bold text-gray-900">
+
+                  <div className="border-t pt-3 flex justify-between font-bold text-gray-900">
                     <span>Total</span>
-                    <span>${(total >= 100 ? total : total + 10).toFixed(2)}</span>
+                    <span>
+                      ${(total >= 100 ? total : total + 10).toFixed(2)}
+                    </span>
                   </div>
                 </div>
 
@@ -164,14 +217,14 @@ export default function CartPage() {
 
                 <button
                   onClick={() => router.push('/checkout')}
-                  className="w-full bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 mb-4"
+                  className="w-full bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold py-3 rounded-lg transition mb-4"
                 >
                   Proceed to Checkout
                 </button>
 
                 <Link
                   href="/shop"
-                  className="block text-center text-gray-600 hover:text-gray-900 text-sm"
+                  className="block text-center text-sm text-gray-600 hover:text-gray-900"
                 >
                   Continue Shopping
                 </Link>
@@ -185,4 +238,3 @@ export default function CartPage() {
     </div>
   );
 }
-

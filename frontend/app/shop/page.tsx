@@ -22,6 +22,7 @@ interface Product {
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -34,17 +35,17 @@ export default function ShopPage() {
   const category = searchParams.get('category') || '';
   const priceRange = searchParams.get('priceRange') || '';
   const material = searchParams.get('material') || '';
-  const sort = searchParams.get('sort') || '';
   const page = parseInt(searchParams.get('page') || '1');
 
   useEffect(() => {
     fetchProducts();
-  }, [category, priceRange, material, sort, page]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, priceRange, material, page]);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      
+
       const params: any = {
         page,
         limit: 12,
@@ -64,23 +65,12 @@ export default function ShopPage() {
         if (max) params.maxPrice = max;
       }
 
-      if (sort) {
-        params.sort = sort;
-      }
-
       const response = await apiClient.get('/products', { params });
-      
-      // Handle response structure
-      if (response.data.success && response.data.data) {
+
+      if (response.data?.success && Array.isArray(response.data.data)) {
         setProducts(response.data.data);
-        setPagination(response.data.pagination || {
-          page: 1,
-          limit: 12,
-          total: response.data.data.length,
-          pages: 1,
-        });
+        setPagination(response.data.pagination);
       } else if (Array.isArray(response.data)) {
-        // Handle case where API returns array directly
         setProducts(response.data);
         setPagination({
           page: 1,
@@ -89,26 +79,13 @@ export default function ShopPage() {
           pages: 1,
         });
       } else {
-        console.error('Unexpected API response:', response.data);
         setProducts([]);
-        setPagination({
-          page: 1,
-          limit: 12,
-          total: 0,
-          pages: 0,
-        });
+        setPagination({ page: 1, limit: 12, total: 0, pages: 0 });
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching products:', error);
-      console.error('Error details:', error.response?.data || error.message);
-      // Set empty state on error
       setProducts([]);
-      setPagination({
-        page: 1,
-        limit: 12,
-        total: 0,
-        pages: 0,
-      });
+      setPagination({ page: 1, limit: 12, total: 0, pages: 0 });
     } finally {
       setLoading(false);
     }
@@ -117,10 +94,10 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar Filters */}
+          {/* ================= FILTER SIDEBAR ================= */}
           <aside className="w-full md:w-64 flex-shrink-0">
             <ProductFilters
               totalProducts={pagination.total}
@@ -128,87 +105,72 @@ export default function ShopPage() {
             />
           </aside>
 
-          {/* Main Content */}
+          {/* ================= PRODUCT LIST ================= */}
           <div className="flex-1">
-            {/* Sort Options */}
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-gray-600 text-sm">
+            {/* Results Count */}
+            <div className="mb-6">
+              <p className="text-sm font-bold text-black">
                 Showing {products.length} of {pagination.total} products
               </p>
-              <select
-                value={sort}
-                onChange={(e) => {
-                  const params = new URLSearchParams(searchParams.toString());
-                  if (e.target.value) {
-                    params.set('sort', e.target.value);
-                  } else {
-                    params.delete('sort');
-                  }
-                  params.delete('page');
-                  window.location.href = `/shop?${params.toString()}`;
-                }}
-                className="px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a574]"
-              >
-                <option value="">Sort by: Default</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="name-asc">Name: A to Z</option>
-                <option value="name-desc">Name: Z to A</option>
-                <option value="rating">Highest Rated</option>
-              </select>
             </div>
 
-            {/* Products Grid */}
+            {/* Loading State */}
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
                   <div key={i} className="animate-pulse">
-                    <div className="aspect-square bg-gray-200 rounded-lg mb-3"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="aspect-square bg-gray-200 rounded-lg mb-3" />
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
                   </div>
                 ))}
               </div>
             ) : products.length === 0 ? (
+              /* Empty State */
               <div className="text-center py-12">
-                <p className="text-gray-600 text-lg mb-2">No products found</p>
-                <p className="text-gray-500 text-sm mb-4">
-                  {loading ? 'Loading products...' : 'Try adjusting your filters or check back later'}
+                <p className="text-gray-600 text-lg mb-2">
+                  No products found
                 </p>
-                {!loading && (
-                  <Link
-                    href="/shop"
-                    className="inline-block px-6 py-2 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition-colors"
-                  >
-                    View All Products
-                  </Link>
-                )}
+                <p className="text-gray-500 text-sm mb-4">
+                  Try adjusting your filters or check back later
+                </p>
+                <Link
+                  href="/shop"
+                  className="inline-block px-6 py-2 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition"
+                >
+                  View All Products
+                </Link>
               </div>
             ) : (
               <>
+                {/* Product Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.map((product) => (
-                    <ProductCard key={product._id} product={product} />
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                    />
                   ))}
                 </div>
 
-                {/* Pagination */}
+                {/* ================= PAGINATION ================= */}
                 {pagination.pages > 1 && (
-                  <div className="flex items-center justify-center gap-2 mt-8">
+                  <div className="flex items-center justify-center gap-2 mt-10">
                     <button
+                      disabled={page === 1}
                       onClick={() => {
                         const params = new URLSearchParams(searchParams.toString());
-                        params.set('page', String(Math.max(1, page - 1)));
+                        params.set('page', String(page - 1));
                         window.location.href = `/shop?${params.toString()}`;
                       }}
-                      disabled={page === 1}
-                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
                     >
                       Previous
                     </button>
-                    
+
                     {[...Array(pagination.pages)].map((_, i) => {
                       const pageNum = i + 1;
+
                       if (
                         pageNum === 1 ||
                         pageNum === pagination.pages ||
@@ -231,23 +193,30 @@ export default function ShopPage() {
                             {pageNum}
                           </button>
                         );
-                      } else if (
+                      }
+
+                      if (
                         pageNum === page - 2 ||
                         pageNum === page + 2
                       ) {
-                        return <span key={pageNum} className="px-2">...</span>;
+                        return (
+                          <span key={pageNum} className="px-2">
+                            ...
+                          </span>
+                        );
                       }
+
                       return null;
                     })}
 
                     <button
+                      disabled={page === pagination.pages}
                       onClick={() => {
                         const params = new URLSearchParams(searchParams.toString());
-                        params.set('page', String(Math.min(pagination.pages, page + 1)));
+                        params.set('page', String(page + 1));
                         window.location.href = `/shop?${params.toString()}`;
                       }}
-                      disabled={page === pagination.pages}
-                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
                     >
                       Next
                     </button>
@@ -263,5 +232,3 @@ export default function ShopPage() {
     </div>
   );
 }
-
-
