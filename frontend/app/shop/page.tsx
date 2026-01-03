@@ -17,7 +17,8 @@ interface Product {
   originalPrice?: number;
   images: string[];
   stock: number;
-  isActive: boolean;
+  status: 'draft' | 'active' | 'archived';
+  isFeatured?: boolean;
 }
 
 export default function ShopPage() {
@@ -184,11 +185,10 @@ export default function ShopPage() {
                               params.set('page', String(pageNum));
                               window.location.href = `/shop?${params.toString()}`;
                             }}
-                            className={`px-4 py-2 border rounded-lg ${
-                              page === pageNum
+                            className={`px-4 py-2 border rounded-lg ${page === pageNum
                                 ? 'bg-[#d4a574] text-white border-[#d4a574]'
                                 : 'border-gray-200 hover:bg-gray-50'
-                            }`}
+                              }`}
                           >
                             {pageNum}
                           </button>

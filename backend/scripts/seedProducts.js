@@ -20,9 +20,9 @@ const products = [
     stock: 15,
     sizes: ["One Size"],
     images: ["/images/braclet1.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["anklet", "evil eye", "silver", "charm"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Silver Beaded Anklet with Star Charm",
@@ -34,7 +34,7 @@ const products = [
     sizes: ["One Size"],
     images: ["/images/braclet2.jpeg"],
     tags: ["anklet", "beaded", "star charm"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Silver Butterfly Anklet",
@@ -46,7 +46,7 @@ const products = [
     sizes: ["One Size"],
     images: ["/images/braclet3.jpeg"],
     tags: ["anklet", "butterfly", "charm"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Silver Beaded Anklet with Black Beads",
@@ -58,7 +58,7 @@ const products = [
     sizes: ["One Size"],
     images: ["/images/braclet4.jpeg"],
     tags: ["anklet", "black beads", "silver"],
-    isActive: true
+    status: "active"
   },
 
   // Earrings (2 products) - er1, er2
@@ -71,9 +71,9 @@ const products = [
     stock: 20,
     sizes: [],
     images: ["/images/er1.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["flower", "stud", "gold"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Black Gemstone Stud Earrings",
@@ -85,7 +85,7 @@ const products = [
     sizes: [],
     images: ["/images/er2.jpeg"],
     tags: ["stud", "black gem", "pavé"],
-    isActive: true
+    status: "active"
   },
 
   // Rings (5 products) - Ring1, Ring2, Ring3, Ring4, Ring5 (note: capital R)
@@ -98,9 +98,9 @@ const products = [
     stock: 16,
     sizes: ["6", "7", "8", "9"],
     images: ["/images/Ring1.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["criss-cross", "silver", "modern"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Criss-Cross Ring",
@@ -112,9 +112,9 @@ const products = [
     stock: 12,
     sizes: ["6", "7", "8", "9"],
     images: ["/images/Ring2.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["criss-cross", "gold", "diamonds"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Padlock Ring",
@@ -126,7 +126,7 @@ const products = [
     sizes: ["6", "7", "8", "9"],
     images: ["/images/Ring3.jpeg"],
     tags: ["padlock", "charm", "pavé"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Silver Bow Ring",
@@ -138,7 +138,7 @@ const products = [
     sizes: ["6", "7", "8", "9"],
     images: ["/images/Ring4.jpeg"],
     tags: ["bow", "silver", "pavé"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Double Band Ring",
@@ -150,7 +150,7 @@ const products = [
     sizes: ["6", "7", "8", "9"],
     images: ["/images/Ring5.jpeg"],
     tags: ["double band", "gold", "diamonds"],
-    isActive: true
+    status: "active"
   },
 
   // Chains/Necklaces (6 products) - chain1, chain2, chain3, chain4, chain5, chain6
@@ -164,9 +164,9 @@ const products = [
     stock: 18,
     sizes: [],
     images: ["/images/chain1.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["heart", "pendant", "pavé"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Silver Heart Pendant Necklace",
@@ -177,9 +177,9 @@ const products = [
     stock: 22,
     sizes: [],
     images: ["/images/chain2.jpeg"],
-    featured: true,
+    isFeatured: true,
     tags: ["heart", "pendant", "silver"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Butterfly Charm Necklace",
@@ -191,7 +191,7 @@ const products = [
     sizes: [],
     images: ["/images/chain3.jpeg"],
     tags: ["butterfly", "charm", "gold"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Star of David Necklace",
@@ -203,7 +203,7 @@ const products = [
     sizes: [],
     images: ["/images/chain4.jpeg"],
     tags: ["star of david", "pendant", "silver"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Bow Pendant Necklace",
@@ -215,7 +215,7 @@ const products = [
     sizes: [],
     images: ["/images/chain5.jpeg"],
     tags: ["bow", "pendant", "gold"],
-    isActive: true
+    status: "active"
   },
   {
     name: "Gold Interlocking Heart Necklace",
@@ -227,7 +227,7 @@ const products = [
     sizes: [],
     images: ["/images/chain6.jpeg"],
     tags: ["heart", "interlocking", "gold"],
-    isActive: true
+    status: "active"
   }
 ];
 

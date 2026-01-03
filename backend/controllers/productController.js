@@ -30,7 +30,7 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
 
   // Only show active products for non-admin users
   if (req.user?.role !== 'admin') {
-    query.isActive = true;
+    query.status = 'active';
   }
 
   // Filter by category
@@ -57,7 +57,7 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
 
   // Filter featured products
   if (featured === 'true') {
-    query.featured = true;
+    query.isFeatured = true;
   }
 
   // Search by name or description
@@ -134,10 +134,10 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
  */
 exports.getProduct = asyncHandler(async (req, res, next) => {
   const query = { _id: req.params.id };
-  
+
   // Non-admin users can only see active products
   if (req.user?.role !== 'admin') {
-    query.isActive = true;
+    query.status = 'active';
   }
 
   const product = await Product.findOne(query);
@@ -240,9 +240,9 @@ exports.getProductsByCategory = asyncHandler(async (req, res, next) => {
   const { page = 1, limit = 12, sort } = req.query;
 
   const query = { category: category.toLowerCase() };
-  
+
   if (req.user?.role !== 'admin') {
-    query.isActive = true;
+    query.status = 'active';
   }
 
   // Sort options
@@ -293,8 +293,8 @@ exports.getFeaturedProducts = asyncHandler(async (req, res, next) => {
   const { limit = 8 } = req.query;
 
   const query = {
-    featured: true,
-    isActive: true,
+    isFeatured: true,
+    status: 'active',
     stock: { $gt: 0 }
   };
 

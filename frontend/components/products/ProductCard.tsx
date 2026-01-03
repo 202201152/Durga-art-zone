@@ -11,7 +11,8 @@ interface Product {
   originalPrice?: number;
   images: string[];
   stock: number;
-  isActive: boolean;
+  status: 'draft' | 'active' | 'archived';
+  isFeatured?: boolean;
 }
 
 interface ProductCardProps {
@@ -19,7 +20,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const isOutOfStock = product.stock === 0 || !product.isActive;
+  const isOutOfStock = product.stock === 0 || product.status !== 'active';
   const discountPercentage = product.originalPrice && product.originalPrice > product.price
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
@@ -40,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             No Image
           </div>
         )}
-        
+
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <span className="text-white font-semibold">Out of Stock</span>

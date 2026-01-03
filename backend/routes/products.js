@@ -7,7 +7,7 @@ const productController = require('../controllers/productController');
 // Import middleware
 const protect = require('../middleware/auth');
 const authorize = require('../middleware/rbac');
-const { validateCreateProduct, validateUpdateProduct } = require('../middleware/productValidator');
+const { validateCreateProduct, validateUpdateProduct, validateStockUpdate } = require('../middleware/productValidator');
 
 /**
  * Product Routes
@@ -56,6 +56,7 @@ router.patch(
   '/:id/stock',
   protect,
   authorize('admin'),
+  validateStockUpdate,
   productController.updateStock
 );
 

@@ -3,13 +3,16 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuth();
   const { getTotalItems } = useCart();
+  const { getWishlistCount } = useWishlist();
   const router = useRouter();
   const cartItemsCount = getTotalItems();
+  const wishlistItemsCount = getWishlistCount();
 
   const handleAccountClick = () => {
     if (isAuthenticated) {
@@ -36,27 +39,18 @@ export default function Header() {
             <Link href="/shop" className="text-gray-700 hover:text-gray-900 transition-colors">
               Shop
             </Link>
-            <Link href="/collections" className="text-gray-700 hover:text-gray-900 transition-colors">
-              Collections
-            </Link>
-            <Link href="/about" className="text-gray-700 hover:text-gray-900 transition-colors">
-              About
+            <Link href="/wishlist" className="text-gray-700 hover:text-gray-900 transition-colors relative">
+              Wishlist
+              {wishlistItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#d4a574] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {wishlistItemsCount > 9 ? '9+' : wishlistItemsCount}
+                </span>
+              )}
             </Link>
           </nav>
 
           {/* Right Icons */}
           <div className="flex items-center gap-4">
-            {/* Wishlist */}
-            <button
-              onClick={() => router.push('/wishlist')}
-              className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
-              aria-label="Wishlist"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </button>
-
             {/* Account */}
             <button
               onClick={handleAccountClick}

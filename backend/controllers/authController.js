@@ -18,7 +18,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   // Check if user already exists
   const existingUser = await User.findOne({ email: email.toLowerCase() });
-  
+
   if (existingUser) {
     return res.status(400).json({
       success: false,
@@ -173,7 +173,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
   // Since we're using JWT tokens, logout is handled client-side
   // by removing the token. However, we can maintain a token blacklist
   // for enhanced security (optional implementation)
-  
+
   res.status(200).json({
     success: true,
     message: 'Logged out successfully'
@@ -193,7 +193,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
   };
 
   // Remove undefined fields
-  Object.keys(fieldsToUpdate).forEach(key => 
+  Object.keys(fieldsToUpdate).forEach(key =>
     fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]
   );
 
@@ -316,7 +316,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     //   subject: 'Password Reset Request',
     //   message: `Click here to reset password: ${resetUrl}`
     // });
-    
+
     res.status(200).json({
       success: true,
       message: 'If an account exists with this email, a password reset link has been sent'

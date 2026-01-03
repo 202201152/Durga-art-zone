@@ -19,9 +19,9 @@ const router = express.Router();
 // Import route modules
 const authRoutes = require('./auth');
 const productRoutes = require('./products');
+const adminRoutes = require('./admin');
+const orderRoutes = require('./orders');
 // const userRoutes = require('./users');
-// const orderRoutes = require('./orders');
-// const adminRoutes = require('./admin');
 // const deliveryRoutes = require('./delivery');
 // const paymentRoutes = require('./payments');
 
@@ -31,10 +31,9 @@ const v1Router = express.Router();
 // Mount route modules
 v1Router.use('/auth', authRoutes);
 v1Router.use('/products', productRoutes);
-// v1Router.use('/products', productRoutes);
+v1Router.use('/admin', adminRoutes);
+v1Router.use('/orders', orderRoutes);
 // v1Router.use('/users', userRoutes);
-// v1Router.use('/orders', orderRoutes);
-// v1Router.use('/admin', adminRoutes);
 // v1Router.use('/delivery', deliveryRoutes);
 // v1Router.use('/payments', paymentRoutes);
 
@@ -49,7 +48,8 @@ v1Router.get('/', (req, res) => {
       products: '/api/v1/products',
       orders: '/api/v1/orders',
       admin: '/api/v1/admin',
-      delivery: '/api/v1/delivery'
+      delivery: '/api/v1/delivery',
+      payments: '/api/v1/payments'
     }
   });
 });
