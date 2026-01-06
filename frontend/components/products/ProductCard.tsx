@@ -35,12 +35,22 @@ export default function ProductCard({ product }: ProductCardProps) {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={(e) => {
+              console.error('Image failed to load:', product.images[0]);
+              // Fallback to placeholder
+              (e.target as HTMLImageElement).style.display = 'none';
+              (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+            }}
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">
-            No Image
+        ) : null}
+
+        {/* Fallback placeholder */}
+        <div className={`w-full h-full flex items-center justify-center text-gray-400 ${product.images && product.images.length > 0 ? 'hidden' : ''}`}>
+          <div className="text-center">
+            <div className="text-4xl mb-2">📦</div>
+            <div className="text-sm">No Image</div>
           </div>
-        )}
+        </div>
 
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -63,9 +73,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.category}
         </p>
         <div className="flex items-center gap-2">
-          <span className="text-gray-900 font-semibold">${product.price}</span>
+          <span className="text-gray-900 font-semibold">₹{product.price}</span>
           {product.originalPrice && product.originalPrice > product.price && (
-            <span className="text-gray-400 text-sm line-through">${product.originalPrice}</span>
+            <span className="text-gray-400 text-sm line-through">₹{product.originalPrice}</span>
           )}
         </div>
       </div>

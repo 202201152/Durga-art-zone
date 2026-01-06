@@ -24,6 +24,7 @@ export default function AdminDashboard() {
         lowStockProducts: [],
     });
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetchDashboardData();
@@ -32,21 +33,49 @@ export default function AdminDashboard() {
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
+            setError(null);
+            console.log('Fetching admin dashboard data...');
             const response = await apiClient.get('/admin/dashboard');
+            console.log('Admin dashboard response:', response.data);
             if (response.data?.success) {
                 setStats(response.data.data);
+            } else {
+                console.error('Admin dashboard API returned no success:', response.data);
+                setError('Failed to load dashboard data');
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error fetching dashboard data:', error);
+            console.error('Error details:', error.response?.data || error.message);
+            setError(error.response?.data?.message || 'Failed to load dashboard data');
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleRetry = () => {
+        fetchDashboardData();
     };
 
     if (loading) {
         return (
             <div className="flex items-center justify-center h-64">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4a574]"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex flex-col items-center justify-center h-64">
+                <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Unable to load dashboard</h3>
+                <p className="text-gray-600 text-center mb-4">{error}</p>
+                <button
+                    onClick={handleRetry}
+                    className="px-4 py-2 bg-[#d4a574] hover:bg-[#c49560] text-white font-semibold rounded-lg transition"
+                >
+                    Try Again
+                </button>
             </div>
         );
     }
@@ -78,7 +107,7 @@ export default function AdminDashboard() {
         },
         {
             title: 'Total Revenue',
-            value: `$${stats.totalRevenue.toLocaleString()}`,
+            value: `₹${stats.totalRevenue.toLocaleString()}`,
             icon: '💰',
             color: 'bg-yellow-500',
             change: '+15%',
@@ -136,7 +165,7 @@ export default function AdminDashboard() {
                                             <p className="text-sm text-gray-500">{order.user?.name}</p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="font-medium text-gray-900">${order.totalAmount}</p>
+                                            <p className="font-medium text-gray-900">₹{order.totalAmount}</p>
                                             <p className="text-sm text-gray-500">{order.status}</p>
                                         </div>
                                     </div>
@@ -196,7 +225,7 @@ export default function AdminDashboard() {
                                         <p className="text-sm text-gray-500">{product.sales} sold</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="font-medium text-gray-900">${product.revenue}</p>
+                                        <p className="font-medium text-gray-900">₹{product.revenue}</p>
                                     </div>
                                 </div>
                             ))}

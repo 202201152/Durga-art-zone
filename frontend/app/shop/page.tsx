@@ -46,6 +46,7 @@ export default function ShopPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
+      console.log('Fetching products with params:', { page, category, priceRange, material });
 
       const params: any = {
         page,
@@ -66,12 +67,16 @@ export default function ShopPage() {
         if (max) params.maxPrice = max;
       }
 
+      console.log('API Request URL:', `/products`, 'Params:', params);
       const response = await apiClient.get('/products', { params });
+      console.log('API Response:', response.data);
 
       if (response.data?.success && Array.isArray(response.data.data)) {
+        console.log('Products loaded:', response.data.data.length);
         setProducts(response.data.data);
         setPagination(response.data.pagination);
       } else if (Array.isArray(response.data)) {
+        console.log('Products loaded (array):', response.data.length);
         setProducts(response.data);
         setPagination({
           page: 1,
@@ -80,11 +85,13 @@ export default function ShopPage() {
           pages: 1,
         });
       } else {
+        console.log('No products found:', response.data);
         setProducts([]);
         setPagination({ page: 1, limit: 12, total: 0, pages: 0 });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching products:', error);
+      console.error('Error details:', error.response?.data || error.message);
       setProducts([]);
       setPagination({ page: 1, limit: 12, total: 0, pages: 0 });
     } finally {
@@ -129,6 +136,7 @@ export default function ShopPage() {
             ) : products.length === 0 ? (
               /* Empty State */
               <div className="text-center py-12">
+                <div className="text-6xl mb-4">📦</div>
                 <p className="text-gray-600 text-lg mb-2">
                   No products found
                 </p>
@@ -186,8 +194,8 @@ export default function ShopPage() {
                               window.location.href = `/shop?${params.toString()}`;
                             }}
                             className={`px-4 py-2 border rounded-lg ${page === pageNum
-                                ? 'bg-[#d4a574] text-white border-[#d4a574]'
-                                : 'border-gray-200 hover:bg-gray-50'
+                              ? 'bg-[#d4a574] text-white border-[#d4a574]'
+                              : 'border-gray-200 hover:bg-gray-50'
                               }`}
                           >
                             {pageNum}
