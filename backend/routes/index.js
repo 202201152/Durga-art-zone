@@ -21,9 +21,9 @@ const authRoutes = require('./auth');
 const productRoutes = require('./products');
 const adminRoutes = require('./admin');
 const orderRoutes = require('./orders');
+const paymentRoutes = require('./payments');
 // const userRoutes = require('./users');
 // const deliveryRoutes = require('./delivery');
-// const paymentRoutes = require('./payments');
 
 // Versioned API routes
 const v1Router = express.Router();
@@ -33,9 +33,9 @@ v1Router.use('/auth', authRoutes);
 v1Router.use('/products', productRoutes);
 v1Router.use('/admin', adminRoutes);
 v1Router.use('/orders', orderRoutes);
+v1Router.use('/payments', paymentRoutes);
 // v1Router.use('/users', userRoutes);
 // v1Router.use('/delivery', deliveryRoutes);
-// v1Router.use('/payments', paymentRoutes);
 
 // Placeholder route
 v1Router.get('/', (req, res) => {

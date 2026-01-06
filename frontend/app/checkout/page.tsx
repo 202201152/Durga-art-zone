@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import apiClient from '@/lib/api/client';
+import Razorpay from 'razorpay';
 
 /* ================= TYPES ================= */
 
@@ -38,6 +39,95 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [notes, setNotes] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Razorpay payment handler
+  const handleRazorpayPayment = async (orderItems: OrderItem[]) => {
+    try {
+      // Create Razorpay order
+      const total = getTotalPrice();
+      const response = await apiClient.post('/payments/create-order', {
+        amount: total,
+        currency: 'INR',
+        receipt: `receipt_${Date.now()}`
+      });
+
+      if (!response.data?.success) {
+        setErrors({ submit: 'Failed to create payment order. Please try again.' });
+        return;
+      }
+
+      const { data: razorpayOrder } = response.data;
+
+      // Initialize Razorpay
+      const razorpay = new (window as any).Razorpay({
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        name: 'Durga Art Zone',
+        description: 'Purchase of jewelry items',
+        image: '/logo.png',
+        order_id: razorpayOrder.orderId,
+        handler: async (response: any) => {
+          try {
+            // Verify payment with backend
+            const verifyResponse = await apiClient.post('/payments/verify', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            });
+
+            if (verifyResponse.data?.success) {
+              // Create order after successful payment
+              const orderResponse = await apiClient.post('/orders', {
+                items: orderItems,
+                shippingAddress,
+                paymentMethod: 'razorpay',
+                notes: notes || undefined,
+                source: 'website',
+                razorpayOrderId: response.razorpay_order_id
+              });
+
+              if (orderResponse.data?.success) {
+                clearCart();
+                router.push(`/order-confirmation?orderId=${orderResponse.data.data._id}`);
+              } else {
+                setErrors({ submit: 'Order creation failed after payment. Please contact support.' });
+              }
+            } else {
+              setErrors({ submit: 'Payment verification failed. Please contact support.' });
+            }
+          } catch (error) {
+            console.error('Payment verification error:', error);
+            setErrors({ submit: 'Payment verification failed. Please try again.' });
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+          contact: shippingAddress.phone || ''
+        },
+        notes: {
+          address: `${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}`
+        },
+        theme: {
+          color: '#d4a574'
+        },
+        modal: {
+          ondismiss: () => {
+            console.log('Razorpay modal dismissed');
+          },
+          escape: true,
+          backdropclose: false
+        }
+      });
+
+      // Open Razorpay checkout
+      razorpay.open();
+    } catch (error) {
+      console.error('Razorpay payment error:', error);
+      setErrors({ submit: 'Payment failed. Please try again.' });
+    }
+  };
 
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
     firstName: '',
@@ -130,17 +220,22 @@ export default function CheckoutPage() {
         size: item.size || 'One Size',
       }));
 
-      const response = await apiClient.post('/orders', {
-        items: orderItems,
-        shippingAddress,
-        paymentMethod,
-        notes: notes || undefined,
-        source: 'website',
-      });
+      if (paymentMethod === 'razorpay') {
+        await handleRazorpayPayment(orderItems);
+      } else {
+        // Handle COD and other payment methods
+        const response = await apiClient.post('/orders', {
+          items: orderItems,
+          shippingAddress,
+          paymentMethod,
+          notes: notes || undefined,
+          source: 'website',
+        });
 
-      if (response.data?.success) {
-        clearCart();
-        router.push(`/order-confirmation?orderId=${response.data.data._id}`);
+        if (response.data?.success) {
+          clearCart();
+          router.push(`/order-confirmation?orderId=${response.data.data._id}`);
+        }
       }
     } catch (error: any) {
       setErrors({ submit: 'Failed to place order. Please try again.' });
@@ -386,6 +481,19 @@ export default function CheckoutPage() {
                         disabled={loading}
                       />
                       <span className="text-gray-900">UPI</span>
+                    </label>
+
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="razorpay"
+                        checked={paymentMethod === 'razorpay'}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                        className="mr-3 text-[#d4a574] focus:ring-[#d4a574]"
+                        disabled={loading}
+                      />
+                      <span className="text-gray-900">Razorpay (Card/UPI/Net Banking)</span>
                     </label>
                   </div>
                 </div>
