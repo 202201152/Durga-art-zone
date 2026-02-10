@@ -17,16 +17,16 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (value === '' || value === 'all') {
       params.delete(key);
     } else {
       params.set(key, value);
     }
-    
+
     // Reset to page 1 when filter changes
     params.delete('page');
-    
+
     router.push(`/shop?${params.toString()}`);
   };
 
@@ -40,9 +40,10 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
 
   const priceRanges = [
     { value: '', label: 'All Prices' },
-    { value: '0-100', label: 'Under $100' },
-    { value: '100-150', label: '$100 - $150' },
-    { value: '150', label: '$150+' },
+    { value: '0-150', label: 'Under ₹150' },
+    { value: '150-250', label: '₹150 - ₹250' },
+    { value: '250-350', label: '₹250 - ₹350' },
+    { value: '350', label: '₹350+' },
   ];
 
   const materials = [
@@ -67,11 +68,10 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
             <button
               key={cat.value}
               onClick={() => updateFilter('category', cat.value)}
-              className={`w-full text-left px-3 py-2 rounded transition-colors ${
-                currentCategory.toLowerCase() === cat.value
+              className={`w-full text-left px-3 py-2 rounded transition-colors ${currentCategory.toLowerCase() === cat.value
                   ? 'bg-gray-200 text-gray-900 font-medium'
                   : 'text-gray-600 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {cat.label}
             </button>
@@ -87,11 +87,10 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
             <button
               key={range.value}
               onClick={() => updateFilter('priceRange', range.value)}
-              className={`w-full text-left px-3 py-2 rounded transition-colors ${
-                currentPriceRange === range.value
+              className={`w-full text-left px-3 py-2 rounded transition-colors ${currentPriceRange === range.value
                   ? 'bg-gray-200 text-gray-900 font-medium'
                   : 'text-gray-600 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {range.label}
             </button>
@@ -107,11 +106,10 @@ export default function ProductFilters({ totalProducts, category }: ProductFilte
             <button
               key={material.value}
               onClick={() => updateFilter('material', material.value)}
-              className={`w-full text-left px-3 py-2 rounded transition-colors ${
-                currentMaterial === material.value
+              className={`w-full text-left px-3 py-2 rounded transition-colors ${currentMaterial === material.value
                   ? 'bg-gray-200 text-gray-900 font-medium'
                   : 'text-gray-600 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {material.label}
             </button>

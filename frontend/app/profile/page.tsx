@@ -171,19 +171,7 @@ export default function ProfilePage() {
                                             </dd>
                                         </div>
 
-                                        <div>
-                                            <dt className="text-sm font-medium text-gray-500">Role</dt>
-                                            <dd className="mt-1">
-                                                <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${profile?.role === 'admin' ? 'bg-red-100 text-red-800' :
-                                                    profile?.role === 'delivery_partner' ? 'bg-blue-100 text-blue-800' :
-                                                        'bg-green-100 text-green-800'
-                                                    }`}>
-                                                    {profile?.role === 'admin' ? 'Administrator' :
-                                                        profile?.role === 'delivery_partner' ? 'Delivery Partner' :
-                                                            'Customer'}
-                                                </span>
-                                            </dd>
-                                        </div>
+
                                     </dl>
 
                                     {/* Edit Actions */}

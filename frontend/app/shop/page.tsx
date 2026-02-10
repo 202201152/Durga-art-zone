@@ -172,7 +172,7 @@ export default function ShopPage() {
                         params.set('page', String(page - 1));
                         window.location.href = `/shop?${params.toString()}`;
                       }}
-                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
+                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50 text-black"
                     >
                       Previous
                     </button>
@@ -194,8 +194,8 @@ export default function ShopPage() {
                               window.location.href = `/shop?${params.toString()}`;
                             }}
                             className={`px-4 py-2 border rounded-lg ${page === pageNum
-                              ? 'bg-[#d4a574] text-white border-[#d4a574]'
-                              : 'border-gray-200 hover:bg-gray-50'
+                              ? 'bg-[#d4a574] text-black border-[#d4a574] font-bold'
+                              : 'border-gray-200 hover:bg-gray-50 text-black'
                               }`}
                           >
                             {pageNum}
@@ -208,7 +208,7 @@ export default function ShopPage() {
                         pageNum === page + 2
                       ) {
                         return (
-                          <span key={pageNum} className="px-2">
+                          <span key={pageNum} className="px-2 text-black">
                             ...
                           </span>
                         );
@@ -224,7 +224,7 @@ export default function ShopPage() {
                         params.set('page', String(page + 1));
                         window.location.href = `/shop?${params.toString()}`;
                       }}
-                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50"
+                      className="px-4 py-2 border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50 text-black"
                     >
                       Next
                     </button>

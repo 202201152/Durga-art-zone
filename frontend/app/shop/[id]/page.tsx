@@ -36,10 +36,15 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>('');
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     fetchProduct();
   }, [params.id]);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [selectedImageIndex, product]);
 
   const fetchProduct = async () => {
     try {
@@ -123,7 +128,7 @@ export default function ProductDetailPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Breadcrumb */}
@@ -142,7 +147,7 @@ export default function ProductDetailPage() {
             <div className="space-y-4">
               {/* Main Image */}
               <div className="aspect-square relative rounded-lg overflow-hidden bg-gray-100">
-                {product.images && product.images.length > 0 ? (
+                {product.images && product.images.length > 0 && !imageError ? (
                   <Image
                     src={product.images[selectedImageIndex]}
                     alt={product.name}
@@ -150,10 +155,12 @@ export default function ProductDetailPage() {
                     className="object-cover"
                     priority
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    onError={() => setImageError(true)}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    No Image
+                  <div className="w-full h-full flex items-center justify-center text-gray-400 flex-col">
+                    <span className="text-4xl mb-2">📦</span>
+                    <span>No Image Available</span>
                   </div>
                 )}
               </div>
@@ -165,11 +172,10 @@ export default function ProductDetailPage() {
                     <button
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-20 relative rounded-lg overflow-hidden border-2 ${
-                        selectedImageIndex === index
-                          ? 'border-[#d4a574]'
-                          : 'border-gray-200'
-                      }`}
+                      className={`flex-shrink-0 w-20 h-20 relative rounded-lg overflow-hidden border-2 ${selectedImageIndex === index
+                        ? 'border-[#d4a574]'
+                        : 'border-gray-200'
+                        }`}
                     >
                       <Image
                         src={image}
@@ -196,11 +202,11 @@ export default function ProductDetailPage() {
 
               {/* Price */}
               <div className="flex items-center gap-4">
-                <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+                <span className="text-3xl font-bold text-gray-900">₹{product.price}</span>
                 {product.originalPrice && product.originalPrice > product.price && (
                   <>
                     <span className="text-xl text-gray-400 line-through">
-                      ${product.originalPrice}
+                      ₹{product.originalPrice}
                     </span>
                     <span className="bg-red-100 text-red-600 text-sm font-semibold px-2 py-1 rounded">
                       -{discountPercentage}%
@@ -216,11 +222,10 @@ export default function ProductDetailPage() {
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
-                        className={`w-5 h-5 ${
-                          i < Math.round(product.ratings.average)
-                            ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300'
-                        }`}
+                        className={`w-5 h-5 ${i < Math.round(product.ratings.average)
+                          ? 'text-yellow-400 fill-current'
+                          : 'text-gray-300'
+                          }`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -257,11 +262,10 @@ export default function ProductDetailPage() {
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`px-4 py-2 border-2 rounded-lg transition-colors ${
-                          selectedSize === size
-                            ? 'border-[#d4a574] bg-[#d4a574] text-white'
-                            : 'border-gray-200 text-gray-700 hover:border-gray-300'
-                        }`}
+                        className={`px-4 py-2 border-2 rounded-lg transition-colors ${selectedSize === size
+                          ? 'border-[#d4a574] bg-[#d4a574] text-white'
+                          : 'border-gray-200 text-gray-700 hover:border-gray-300'
+                          }`}
                       >
                         {size}
                       </button>
@@ -296,7 +300,7 @@ export default function ProductDetailPage() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Free shipping on orders over $100</span>
+                  <span>Free shipping on orders over ₹1000</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
