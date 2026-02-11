@@ -5,238 +5,354 @@ const config = require('../config');
 
 /**
  * Product Seeding Script
- * Adds sample products to the database
+ * Adds sample products to the database using available images
  */
 
 const products = [
-  // Bracelets (4 products)
+  // ================= BRACELETS (10 items) =================
   {
-    name: "Silver Evil Eye Anklet",
-    description: "Delicate silver anklet featuring evil eye charms with dark blue outer ring and black center. Includes silver beads and star charm on extender chain.",
+    name: "Gold Leaf Charm Bracelet",
+    description: "Delicate gold-toned bracelet featuring intricate leaf charms interspersed with small beads. Perfect for stacking or wearing alone.",
     category: "bracelet",
-    material: "Silver",
+    material: "Gold",
     price: 189,
     originalPrice: 250,
     stock: 15,
-    sizes: ["One Size"],
     images: ["/images/bracelet-gold-01.jpg.jpeg"],
-    isFeatured: true,
-    tags: ["anklet", "evil eye", "silver", "charm"],
-    status: "active"
+    tags: ["bracelet", "gold", "charm", "leaf"],
+    status: "active",
+    isFeatured: true
   },
   {
-    name: "Silver Beaded Anklet with Star Charm",
-    description: "Elegant silver anklet with alternating smooth and textured disc beads, featuring star charms on extender chain.",
+    name: "Gold Beaded Chain Bracelet",
+    description: "Classic gold beaded bracelet with a durable chain. A timeless piece suitable for daily wear.",
     category: "bracelet",
-    material: "Silver",
+    material: "Gold",
     price: 150,
     originalPrice: 200,
-    stock: 12,
-    sizes: ["One Size"],
+    stock: 20,
     images: ["/images/bracelet-gold-02.jpg.jpeg"],
-    tags: ["anklet", "beaded", "star charm"],
+    tags: ["bracelet", "gold", "beaded"],
     status: "active"
   },
   {
-    name: "Silver Butterfly Anklet",
-    description: "Beautiful silver anklet with detailed butterfly charms, silver beads, and star charms on extender chain.",
+    name: "Gold Butterfly Link Bracelet",
+    description: "Elegant bracelet featuring butterfly-shaped links connected by a fine chain. Adds a touch of whimsy to any outfit.",
     category: "bracelet",
-    material: "Silver",
+    material: "Gold",
     price: 195,
     originalPrice: 260,
-    stock: 10,
-    sizes: ["One Size"],
+    stock: 12,
     images: ["/images/bracelet-gold-03.jpg.jpeg"],
-    tags: ["anklet", "butterfly", "charm"],
+    tags: ["bracelet", "gold", "butterfly"],
     status: "active"
   },
   {
-    name: "Silver Heart Charm Anklet",
-    description: "Romantic silver anklet with heart charms, silver beads, and delicate chain extender.",
+    name: "Gold Heart Charm Anklet",
+    description: "Romantic gold-toned anklet with heart charms. Adjustable length for a comfortable fit.",
     category: "bracelet",
-    material: "Silver",
+    material: "Gold",
     price: 210,
     originalPrice: 280,
-    stock: 8,
-    sizes: ["One Size"],
+    stock: 18,
     images: ["/images/bracelet-gold-04.jpg.jpeg"],
-    tags: ["anklet", "heart", "charm"],
+    tags: ["anklet", "gold", "heart"],
     status: "active"
   },
-
-  // Earrings (2 products)
   {
-    name: "Flower Stud Earrings",
-    description: "Delicate five-petal flower stud earrings with marquise-cut stones forming petals and a central round stone. Crafted in gold-toned metal.",
-    category: "earrings",
+    name: "Gold Star Dust Bracelet",
+    description: "Shimmering bracelet with star-shaped accents and a textured finish that catches the light beautifully.",
+    category: "bracelet",
     material: "Gold",
     price: 225,
-    originalPrice: 300,
-    stock: 20,
-    sizes: ["One Size"],
-    images: ["/images/earring-gold-01.jpg.jpeg"],
-    tags: ["stud", "flower", "marquise"],
+    stock: 10,
+    images: ["/images/bracelet-gold-05.jpg.jpeg"],
+    tags: ["bracelet", "gold", "star"],
     status: "active"
   },
   {
-    name: "Teardrop Hoop Earrings",
-    description: "Elegant teardrop-shaped hoop earrings with delicate filigree details and secure latch closure. Gold-toned finish.",
+    name: "Gold Infinity Link Bracelet",
+    description: "Symbolize forever with this infinity link bracelet. Crafted in high-quality gold tone material.",
+    category: "bracelet",
+    material: "Gold",
+    price: 175,
+    stock: 25,
+    images: ["/images/bracelet-gold-06.jpg.jpeg"],
+    tags: ["bracelet", "gold", "infinity"],
+    status: "active"
+  },
+  {
+    name: "Gold Coin Charm Bracelet",
+    description: "Bohemian style bracelet featuring dangling coin charms. Adds movement and style to your wrist stack.",
+    category: "bracelet",
+    material: "Gold",
+    price: 199,
+    originalPrice: 240,
+    stock: 14,
+    images: ["/images/bracelet-gold-07.jpg.jpeg"],
+    tags: ["bracelet", "gold", "coin", "boho"],
+    status: "active"
+  },
+  {
+    name: "Gold Pearl Accent Bracelet",
+    description: "Sophisticated bracelet combining gold links with lustrous faux pearl accents through the chain.",
+    category: "bracelet",
+    material: "Gold",
+    price: 245,
+    stock: 8,
+    images: ["/images/bracelet-gold-08.jpg.jpeg"],
+    tags: ["bracelet", "gold", "pearl"],
+    status: "active"
+  },
+  {
+    name: "Gold Geometric Cuff",
+    description: "Modern open cuff design with geometric shapes. Minimalist and chic.",
+    category: "bracelet",
+    material: "Gold",
+    price: 160,
+    stock: 22,
+    images: ["/images/bracelet-gold-09.jpg.jpeg"],
+    tags: ["cuff", "gold", "geometric", "minimalist"],
+    status: "active"
+  },
+  {
+    name: "Gold Multi-Layer Bracelet",
+    description: "Get the stacked look with one piece. Features multiple delicate chains layered together.",
+    category: "bracelet",
+    material: "Gold",
+    price: 280,
+    originalPrice: 350,
+    stock: 5,
+    images: ["/images/bracelet-gold-10.jpg.jpeg"],
+    tags: ["bracelet", "gold", "layered"],
+    status: "active",
+    isFeatured: true
+  },
+
+  // ================= EARRINGS (2 items) =================
+  {
+    name: "Gold Flower Studs",
+    description: "Delicate flower stud earrings with crystal centers. Perfect for everyday elegance.",
     category: "earrings",
     material: "Gold",
-    price: 250,
-    originalPrice: 340,
-    stock: 15,
-    sizes: ["One Size"],
+    price: 120,
+    stock: 30,
+    images: ["/images/earring-gold-01.jpg.jpeg"],
+    tags: ["earrings", "studs", "flower", "gold"],
+    status: "active"
+  },
+  {
+    name: "Gold Teardrop Hoops",
+    description: "Classic teardrop-shaped hoop earrings. Lightweight and versatile.",
+    category: "earrings",
+    material: "Gold",
+    price: 145,
+    stock: 25,
     images: ["/images/earring-gold-02.jpg.jpeg"],
-    tags: ["hoop", "teardrop", "filigree"],
+    tags: ["earrings", "hoops", "gold"],
     status: "active"
   },
 
-  // Rings (5 products)
+  // ================= RINGS (6 items) =================
   {
-    name: "Silver Criss-Cross Ring",
-    description: "Modern silver ring with criss-cross band design, one band adorned with sparkling stones and a central stone at intersection.",
+    name: "Gold Criss-Cross Ring",
+    description: "Modern criss-cross band design adorned with small crystals.",
     category: "rings",
-    material: "Silver",
-    price: 139,
-    originalPrice: 200,
-    stock: 11,
-    sizes: ["6", "7", "8", "9"],
+    material: "Gold",
+    price: 180,
+    stock: 15,
+    sizes: ["6", "7", "8"],
     images: ["/images/ring-gold-01.jpg.jpeg"],
-    tags: ["criss-cross", "stones", "modern"],
+    tags: ["ring", "gold", "criss-cross"],
     status: "active"
   },
   {
     name: "Gold Infinity Ring",
-    description: "Elegant gold ring featuring infinity symbol design with small diamonds set along the curve, polished band.",
+    description: "Elegant ring featuring the infinity symbol, representing eternal love.",
     category: "rings",
     material: "Gold",
-    price: 349,
-    originalPrice: 480,
-    stock: 8,
+    price: 165,
+    stock: 18,
     sizes: ["6", "7", "8", "9"],
     images: ["/images/ring-gold-02.jpg.jpeg"],
-    tags: ["infinity", "diamonds", "elegant"],
+    tags: ["ring", "gold", "infinity"],
     status: "active"
   },
   {
-    name: "Silver Heart Promise Ring",
-    description: "Romantic silver promise ring with heart-shaped setting, small accent stone, and polished band finish.",
-    category: "rings",
-    material: "Silver",
-    price: 189,
-    originalPrice: 250,
-    stock: 15,
-    sizes: ["6", "7", "8", "9"],
-    images: ["/images/ring-gold-03.jpg.jpeg"],
-    tags: ["promise ring", "heart", "romantic"],
-    status: "active"
-  },
-  {
-    name: "Gold Diamond Solitaire Ring",
-    description: "Classic gold solitaire ring with single brilliant-cut diamond in four-prong setting, timeless design.",
+    name: "Gold Heart Promise Ring",
+    description: "Sweet and simple heart-shaped ring, perfect as a promise ring or gift.",
     category: "rings",
     material: "Gold",
-    price: 599,
-    originalPrice: 850,
-    stock: 5,
-    sizes: ["6", "7", "8", "9"],
-    images: ["/images/ring-gold-04.jpg.jpeg"],
-    tags: ["solitaire", "diamond", "classic"],
+    price: 150,
+    stock: 20,
+    sizes: ["5", "6", "7", "8"],
+    images: ["/images/ring-gold-03.jpg.jpeg"],
+    tags: ["ring", "gold", "heart"],
     status: "active"
   },
   {
-    name: "Silver Double Band Ring",
-    description: "Contemporary silver ring with double band design, textured finish, and modern aesthetic.",
+    name: "Gold Solitaire Ring",
+    description: "Classic solitaire ring featuring a high-quality cubic zirconia stone.",
     category: "rings",
-    material: "Silver",
-    price: 289,
-    stock: 11,
-    sizes: ["6", "7", "8", "9"],
+    material: "Gold",
+    price: 220,
+    originalPrice: 299,
+    stock: 10,
+    sizes: ["6", "7", "8"],
+    images: ["/images/ring-gold-04.jpg.jpeg"],
+    tags: ["ring", "gold", "solitaire"],
+    status: "active"
+  },
+  {
+    name: "Gold Texture Band Ring",
+    description: "Wide band ring with a unique hammered texture finish.",
+    category: "rings",
+    material: "Gold",
+    price: 195,
+    stock: 12,
+    sizes: ["7", "8", "9"],
     images: ["/images/ring-gold-05.jpg.jpeg"],
-    tags: ["double band", "textured", "modern"],
+    tags: ["ring", "gold", "textured"],
+    status: "active"
+  },
+  {
+    name: "Gold Twist Ring",
+    description: "Delicate twisted band design, simple yet sophisticated.",
+    category: "rings",
+    material: "Gold",
+    price: 140,
+    stock: 22,
+    sizes: ["6", "7", "8"],
+    images: ["/images/ring-gold-06.jpg.jpeg"],
+    tags: ["ring", "gold", "twist"],
     status: "active"
   },
 
-  // Chains/Necklaces (6 products)
+  // ================= CHAINS/NECKLACES (10 items) =================
   {
-    name: "Silver Link Chain Necklace",
-    description: "Classic silver link chain with alternating polished and textured links, adjustable length with lobster clasp.",
-    category: "chains",
-    material: "Silver",
-    price: 299,
-    originalPrice: 390,
-    stock: 25,
-    sizes: ["16", "18", "20"],
-    images: ["/images/chain1.jpeg"],
-    tags: ["link chain", "classic", "adjustable"],
-    status: "active"
-  },
-  {
-    name: "Silver Rope Chain",
-    description: "Delicate silver rope chain with twisted design, lightweight and comfortable for everyday wear.",
-    category: "chains",
-    material: "Silver",
-    price: 259,
-    originalPrice: 350,
-    stock: 30,
-    sizes: ["16", "18", "20"],
-    images: ["/images/chain2.jpeg"],
-    tags: ["rope chain", "twisted", "lightweight"],
-    status: "active"
-  },
-  {
-    name: "Gold Box Chain Necklace",
-    description: "Elegant gold box chain with square links, substantial weight for premium feel, secure spring ring clasp.",
+    name: "Gold Link Chain",
+    description: "Classic gold link chain, sturdy and stylish. Wear it alone or with a pendant.",
     category: "chains",
     material: "Gold",
-    price: 399,
-    originalPrice: 550,
+    price: 350,
+    originalPrice: 450,
     stock: 15,
-    sizes: ["16", "18", "20"],
-    images: ["/images/chain3.jpeg"],
-    tags: ["box chain", "substantial", "premium"],
+    sizes: ["18", "20", "22"],
+    images: ["/images/necklace-gold-01.jpg.jpeg"],
+    tags: ["chain", "gold", "link"],
+    status: "active",
+    isFeatured: true
+  },
+  {
+    name: "Gold Rope Chain",
+    description: "Intricate rope chain design that offers a luxurious look.",
+    category: "chains",
+    material: "Gold",
+    price: 380,
+    stock: 12,
+    sizes: ["18", "20", "24"],
+    images: ["/images/necklace-gold-02.jpg.jpeg"],
+    tags: ["chain", "gold", "rope"],
     status: "active"
   },
   {
-    name: "Silver Cable Chain",
-    description: "Modern silver cable chain with oval links, minimalist design perfect for pendants and layering.",
+    name: "Gold Box Chain",
+    description: "Sleek box chain with square links, offering a modern geometric look.",
     category: "chains",
-    material: "Silver",
-    price: 279,
-    originalPrice: 380,
+    material: "Gold",
+    price: 320,
     stock: 20,
+    sizes: ["18", "20", "22"],
+    images: ["/images/necklace-gold-03.jpg.jpeg"],
+    tags: ["chain", "gold", "box"],
+    status: "active"
+  },
+  {
+    name: "Gold Snake Chain",
+    description: "Smooth and flexible snake chain, perfect for a liquid gold effect.",
+    category: "chains",
+    material: "Gold",
+    price: 290,
+    stock: 18,
     sizes: ["16", "18", "20"],
-    images: ["/images/chain4.jpeg"],
-    tags: ["cable chain", "modern", "minimalist"],
+    images: ["/images/necklace-gold-04.jpg.jpeg"],
+    tags: ["chain", "gold", "snake"],
     status: "active"
   },
   {
     name: "Gold Figaro Chain",
-    description: "Traditional gold Figaro chain with alternating pattern of one long link followed by three short links, polished finish.",
+    description: "Traditional Figaro chain with alternating link sizes.",
     category: "chains",
     material: "Gold",
-    price: 449,
-    originalPrice: 600,
-    stock: 12,
-    sizes: ["16", "18", "20"],
-    images: ["/images/chain5.jpeg"],
-    tags: ["Figaro", "traditional", "polished"],
+    price: 360,
+    stock: 10,
+    sizes: ["20", "22", "24"],
+    images: ["/images/necklace-gold-05.jpg.jpeg"],
+    tags: ["chain", "gold", "figaro"],
     status: "active"
   },
   {
-    name: "Silver Snake Chain",
-    description: "Flexible silver snake chain with smooth, rounded links that create a fluid, liquid-like appearance when worn.",
+    name: "Gold Curb Chain",
+    description: "Flat curb chain design that sits comfortably against the skin.",
     category: "chains",
-    material: "Silver",
-    price: 319,
-    originalPrice: 420,
-    stock: 18,
-    sizes: ["16", "18", "20"],
-    images: ["/images/chain6.jpeg"],
-    tags: ["snake chain", "flexible", "smooth"],
+    material: "Gold",
+    price: 340,
+    stock: 15,
+    sizes: ["18", "20"],
+    images: ["/images/necklace-gold-06.jpg.jpeg"],
+    tags: ["chain", "gold", "curb"],
     status: "active"
   },
+  {
+    name: "Gold Singapore Chain",
+    description: "twisted Singapore chain that sparkles as it moves.",
+    category: "chains",
+    material: "Gold",
+    price: 310,
+    stock: 14,
+    sizes: ["16", "18"],
+    images: ["/images/necklace-gold-07.jpg.jpeg"],
+    tags: ["chain", "gold", "singapore"],
+    status: "active"
+  },
+  {
+    name: "Gold Wheat Chain",
+    description: "Intricate wheat chain design, durable and beautiful.",
+    category: "chains",
+    material: "Gold",
+    price: 390,
+    originalPrice: 500,
+    stock: 8,
+    sizes: ["20", "22", "24"],
+    images: ["/images/necklace-gold-08.jpg.jpeg"],
+    tags: ["chain", "gold", "wheat"],
+    status: "active"
+  },
+  {
+    name: "Gold Bead Chain",
+    description: "Chain composed of small gold beads for a textured look.",
+    category: "chains",
+    material: "Gold",
+    price: 275,
+    stock: 20,
+    sizes: ["16", "18"],
+    images: ["/images/necklace-gold-09.jpg.jpeg"],
+    tags: ["chain", "gold", "bead"],
+    status: "active"
+  },
+  {
+    name: "Gold Herringbone Chain",
+    description: "Flat herringbone chain that lays perfectly flat on the neck.",
+    category: "chains",
+    material: "Gold",
+    price: 400,
+    stock: 6,
+    sizes: ["16", "18"],
+    images: ["/images/necklace-gold-10.jpg.jpeg"],
+    tags: ["chain", "gold", "herringbone"],
+    status: "active",
+    isFeatured: true
+  }
 ];
 
 const seedProducts = async () => {
@@ -245,9 +361,9 @@ const seedProducts = async () => {
     await mongoose.connect(config.mongodbUri);
     console.log('✅ MongoDB Connected');
 
-    // Clear existing products (optional - comment out if you want to keep existing)
-    // await Product.deleteMany({});
-    // console.log('🗑️  Cleared existing products');
+    // Clear existing products
+    await Product.deleteMany({});
+    console.log('🗑️  Cleared existing products');
 
     // Insert products
     const createdProducts = await Product.insertMany(products);
@@ -274,4 +390,3 @@ const seedProducts = async () => {
 
 // Run the seed function
 seedProducts();
-
