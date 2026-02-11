@@ -33,13 +33,13 @@ export default function Header() {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-700 hover:text-gray-900 transition-colors">
+            <Link href="/" className="text-gray-700 hover:text-[#d4a574] transition-colors">
               Home
             </Link>
-            <Link href="/shop" className="text-gray-700 hover:text-gray-900 transition-colors">
+            <Link href="/shop" className="text-gray-700 hover:text-[#d4a574] transition-colors">
               Shop
             </Link>
-            <Link href="/wishlist" className="text-gray-700 hover:text-gray-900 transition-colors relative">
+            <Link href="/wishlist" className="text-gray-700 hover:text-[#d4a574] transition-colors relative">
               Wishlist
               {wishlistItemsCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#d4a574] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -54,7 +54,7 @@ export default function Header() {
             {/* Account */}
             <button
               onClick={handleAccountClick}
-              className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
+              className="p-2 text-gray-700 hover:text-[#d4a574] transition-colors"
               aria-label="Account"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -66,7 +66,7 @@ export default function Header() {
             {/* Cart */}
             <button
               onClick={() => router.push('/cart')}
-              className="p-2 text-gray-700 hover:text-gray-900 transition-colors relative"
+              className="p-2 text-gray-700 hover:text-[#d4a574] transition-colors relative"
               aria-label="Shopping Cart"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
