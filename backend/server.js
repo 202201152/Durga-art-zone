@@ -64,6 +64,11 @@ if (config.nodeEnv === 'development') {
 // Rate limiting
 app.use('/api/', rateLimiter);
 
+// Root endpoint for Koyeb Health Check
+app.get('/', (req, res) => {
+  res.status(200).send('Durga Art Zone API Running');
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
@@ -91,7 +96,7 @@ app.use(errorHandler);
 const startServer = async () => {
   try {
     await connectDB();
-    
+
     const PORT = config.port || 5000;
     const server = app.listen(PORT, () => {
       console.log(`🚀 Server running in ${config.nodeEnv} mode on port ${PORT}`);
