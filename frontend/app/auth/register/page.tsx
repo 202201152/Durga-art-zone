@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
@@ -19,11 +19,11 @@ export default function RegisterPage() {
         e.preventDefault();
         setLoading(true);
         try {
-            await register({ name, email, password });
-            toast.success('Account created');
+            await register(name, email, password);
+            // toast.success('Account created'); // Handled in AuthContext
             router.push('/');
         } catch (err: any) {
-            toast.error(err?.response?.data?.message || err.message || 'Registration failed');
+            // Error handled in AuthContext
         } finally {
             setLoading(false);
         }
