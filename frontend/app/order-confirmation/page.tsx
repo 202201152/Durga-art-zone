@@ -143,7 +143,7 @@ export default function OrderConfirmationPage() {
                         Order Confirmed!
                     </h1>
                     <p className="text-gray-600">
-                        Thank you for your order. We've received it and will begin processing it shortly.
+                        Thank you for your order. We&apos;ve received it and will begin processing it shortly.
                     </p>
                 </div>
 
@@ -173,11 +173,11 @@ export default function OrderConfirmationPage() {
                                 <div className="flex justify-between">
                                     <span className="text-gray-600">Order Status:</span>
                                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                            order.status === 'confirmed' ? 'bg-blue-100 text-blue-800' :
-                                                order.status === 'processing' ? 'bg-purple-100 text-purple-800' :
-                                                    order.status === 'shipped' ? 'bg-indigo-100 text-indigo-800' :
-                                                        order.status === 'delivered' ? 'bg-green-100 text-green-800' :
-                                                            'bg-gray-100 text-gray-800'
+                                        order.status === 'confirmed' ? 'bg-blue-100 text-blue-800' :
+                                            order.status === 'processing' ? 'bg-purple-100 text-purple-800' :
+                                                order.status === 'shipped' ? 'bg-indigo-100 text-indigo-800' :
+                                                    order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                                                        'bg-gray-100 text-gray-800'
                                         }`}>
                                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                                     </span>
@@ -185,9 +185,9 @@ export default function OrderConfirmationPage() {
                                 <div className="flex justify-between">
                                     <span className="text-gray-600">Payment Status:</span>
                                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${order.paymentStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                            order.paymentStatus === 'completed' ? 'bg-green-100 text-green-800' :
-                                                order.paymentStatus === 'failed' ? 'bg-red-100 text-red-800' :
-                                                    'bg-gray-100 text-gray-800'
+                                        order.paymentStatus === 'completed' ? 'bg-green-100 text-green-800' :
+                                            order.paymentStatus === 'failed' ? 'bg-red-100 text-red-800' :
+                                                'bg-gray-100 text-gray-800'
                                         }`}>
                                         {order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
                                     </span>
@@ -257,11 +257,11 @@ export default function OrderConfirmationPage() {
 
                         {/* Next Steps */}
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                            <h3 className="text-lg font-semibold text-blue-900 mb-3">What's Next?</h3>
+                            <h3 className="text-lg font-semibold text-blue-900 mb-3">What&apos;s Next?</h3>
                             <ul className="space-y-2 text-sm text-blue-800">
-                                <li>• You'll receive an order confirmation email shortly</li>
-                                <li>• We'll process your order within 1-2 business days</li>
-                                <li>• You'll receive tracking information once your order ships</li>
+                                <li>• You&apos;ll receive an order confirmation email shortly</li>
+                                <li>• We&apos;ll process your order within 1-2 business days</li>
+                                <li>• You&apos;ll receive tracking information once your order ships</li>
                                 <li>• Expected delivery: 3-5 business days</li>
                             </ul>
                         </div>

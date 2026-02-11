@@ -58,7 +58,7 @@ export default function WishlistPage() {
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
                         <p className="text-gray-600 mb-6">
-                            Start adding items you love to your wishlist and they'll appear here.
+                            Start adding items you love to your wishlist and they&apos;ll appear here.
                         </p>
                         <Link
                             href="/shop"

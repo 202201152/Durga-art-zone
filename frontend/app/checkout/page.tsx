@@ -601,7 +601,7 @@ export default function CheckoutPage() {
             {shipping === 0 && (
               <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
                 <p className="text-sm text-green-700">
-                  🎉 You've qualified for free shipping!
+                  🎉 You&apos;ve qualified for free shipping!
                 </p>
               </div>
             )}

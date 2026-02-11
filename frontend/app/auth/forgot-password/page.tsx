@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const response = await apiClient.post('/auth/forgotpassword', { email });
-      
+
       // In development, show reset token
       if (process.env.NEXT_PUBLIC_ENV === 'development' && response.data.resetToken) {
         toast.success('Password reset link sent! Check the console for reset token.');
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
       } else {
         toast.success('If an account exists with this email, a password reset link has been sent.');
       }
-      
+
       setSuccess(true);
     } catch (error: any) {
       const message = error.response?.data?.message || 'Failed to send reset email. Please try again.';
@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
           <Logo />
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Check your email</h1>
           <p className="text-gray-600 mb-8">
-            We've sent a password reset link to <strong>{email}</strong>
+            We&apos;ve sent a password reset link to <strong>{email}</strong>
           </p>
           <Link
             href="/auth/login"

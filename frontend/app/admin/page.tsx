@@ -120,7 +120,7 @@ export default function AdminDashboard() {
             {/* Page Header */}
             <div>
                 <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-gray-600">Welcome to your admin dashboard. Here's what's happening with your store today.</p>
+                <p className="text-gray-600">Welcome to your admin dashboard. Here&apos;s what&apos;s happening with your store today.</p>
             </div>
 
             {/* Stats Grid */}
