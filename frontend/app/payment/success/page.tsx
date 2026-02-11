@@ -9,7 +9,9 @@ import Logo from '@/components/auth/Logo';
  * Payment Success Page
  * Displayed after successful Razorpay payment
  */
-export default function PaymentSuccessPage() {
+import { Suspense } from 'react';
+
+function PaymentSuccessContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { clearCart } = useCart();
@@ -66,5 +68,13 @@ export default function PaymentSuccessPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function PaymentSuccessPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#faf8f5] flex items-center justify-center">Loading...</div>}>
+            <PaymentSuccessContent />
+        </Suspense>
     );
 }

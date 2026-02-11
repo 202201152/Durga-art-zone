@@ -31,7 +31,9 @@ interface Order {
     orderDate: string;
 }
 
-export default function OrderConfirmationPage() {
+import { Suspense } from 'react';
+
+function OrderConfirmationContent() {
     const { user, loading: authLoading } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -287,5 +289,13 @@ export default function OrderConfirmationPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function OrderConfirmationPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <OrderConfirmationContent />
+        </Suspense>
     );
 }

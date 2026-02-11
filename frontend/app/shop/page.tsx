@@ -21,7 +21,9 @@ interface Product {
   isFeatured?: boolean;
 }
 
-export default function ShopPage() {
+import { Suspense } from 'react';
+
+function ShopContent() {
   const searchParams = useSearchParams();
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -238,5 +240,13 @@ export default function ShopPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>}>
+      <ShopContent />
+    </Suspense>
   );
 }

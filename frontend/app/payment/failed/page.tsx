@@ -8,7 +8,9 @@ import Logo from '@/components/auth/Logo';
  * Payment Failed Page
  * Displayed when Razorpay payment fails
  */
-export default function PaymentFailedPage() {
+import { Suspense } from 'react';
+
+function PaymentFailedContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -67,5 +69,13 @@ export default function PaymentFailedPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function PaymentFailedPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#faf8f5] flex items-center justify-center">Loading...</div>}>
+            <PaymentFailedContent />
+        </Suspense>
     );
 }

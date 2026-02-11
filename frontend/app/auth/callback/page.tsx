@@ -10,7 +10,9 @@ import Logo from '@/components/auth/Logo';
  * OAuth Callback Page
  * Handles Google OAuth callback and sets token
  */
-export default function AuthCallbackPage() {
+import { Suspense } from 'react';
+
+function AuthCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -36,5 +38,13 @@ export default function AuthCallbackPage() {
         <p className="text-gray-600 mt-4">Completing sign in...</p>
       </div>
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#faf8f5] flex items-center justify-center">Loading...</div>}>
+      <AuthCallbackContent />
+    </Suspense>
   );
 }
